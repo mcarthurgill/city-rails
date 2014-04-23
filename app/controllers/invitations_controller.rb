@@ -2,7 +2,6 @@ class InvitationsController < ApplicationController
   # POST /invitations
   # POST /invitations.json
   def create
-    # verify_authenticity ? nil : return
     ivs = []
     invitee = User.find(params[:user_id])
 

@@ -2,8 +2,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    # verify_authenticity ? nil : return
-
     @user = User.find_by_id_and_password(params[:id], params[:user][:password])
     
     respond_to do |format|
@@ -18,8 +16,6 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    # verify_authenticity ? nil : return
-
     phone_number = format_phone(params[:user][:phone])
     @user = User.find_or_initialize_by_phone(phone_number)
 
@@ -45,8 +41,6 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    # verify_authenticity ? nil : return
-
     @user = User.find_by_id_and_password(params[:id], params[:user][:password])
 
     respond_to do |format|
@@ -71,8 +65,6 @@ class UsersController < ApplicationController
   end
 
   def all_friends
-    # verify_authenticity ? nil : return
-
     user = User.find(params[:id])
 
     respond_to do |format|
@@ -85,8 +77,6 @@ class UsersController < ApplicationController
   end
 
   def friends_in_my_city
-    # verify_authenticity ? nil : return
-
     user = User.find(params[:id])
 
     respond_to do |format|

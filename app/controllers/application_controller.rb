@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :verify_token
+
+  private
+
+  def verify_token
+    redirect_to :status => 404 unless params[:sk] == "foeiuh9q28734gfa9w8hfg92830rq892g0oaw8hf"  
+  end
+
   def encrypt_password(string)
     return Digest::SHA1.hexdigest("jk12_~!la#{string}supYYYm03_!_3")
   end

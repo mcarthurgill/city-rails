@@ -35,8 +35,6 @@ class CitiesController < ApplicationController
   # POST /cities
   # POST /cities.json
   def create
-    # verify_authenticity ? nil : return
-
     @city = City.new(params[:city])
 
     respond_to do |format|
@@ -53,8 +51,6 @@ class CitiesController < ApplicationController
   # PUT /cities/1
   # PUT /cities/1.json
   def update
-    # verify_authenticity ? nil : return
-
     @city = City.find(params[:id])
 
     respond_to do |format|
@@ -71,8 +67,6 @@ class CitiesController < ApplicationController
   # DELETE /cities/1
   # DELETE /cities/1.json
   def destroy
-    # verify_authenticity ? nil : return
-
     @city = City.find(params[:id])
     @city.destroy
 
@@ -83,8 +77,6 @@ class CitiesController < ApplicationController
   end
 
   def all_venues
-    # verify_authenticity ? nil : return
-
     city = City.find(params[:id])
 
     respond_to do |format|
