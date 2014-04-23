@@ -1,4 +1,7 @@
 CityRails::Application.routes.draw do
+  resources :cities
+
+
   resources :contacts
 
 
