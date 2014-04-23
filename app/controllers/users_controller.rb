@@ -80,4 +80,37 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def all_contacts
+    # verify_authenticity ? nil : return
+
+    user = User.find(params[:id])
+
+    respond_to do |format|
+      if user 
+        format.json { render json: { :user => user.as_json(:methods => [:contacts]) } }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def friends_in_city
+    # verify_authenticity ? nil : return
+
+    user = User.find(params[:id])
+    city = City.find(params[:city_id])
+
+    if user && city
+      
+    end
+
+    respond_to do |format|
+      if user 
+        format.json { render json: { :user => user.as_json(:methods => [:contacts]) } }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

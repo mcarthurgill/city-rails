@@ -1,4 +1,6 @@
 CityRails::Application.routes.draw do
+  root to: "users#show"
+
   resources :cities
 
 
@@ -7,8 +9,11 @@ CityRails::Application.routes.draw do
 
   resources :contacts
 
-
+  resources :friendships
+  
   resources :users
+
+  match 'users/:id/all_contacts', to: 'users#all_contacts', as: 'user_all_contacts'
 
 
   # The priority is based upon order of creation:
