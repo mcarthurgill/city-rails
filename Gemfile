@@ -12,8 +12,6 @@ group :production do
   gem 'pg'
 end
 
-gem 'twilio-ruby'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -28,7 +26,10 @@ end
 
 gem 'jquery-rails'
 
+#added gems
 gem 'rapns'
+gem 'delayed_job_active_record'
+gem 'twilio-ruby'
 
 
 # To use ActiveModel has_secure_password

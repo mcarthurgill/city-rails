@@ -1,54 +1,43 @@
 class UsersController < ApplicationController
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
-  end
-
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    # verify_authenticity ? nil : return
 
+    @user = User.find_by_id_and_password(params[:id], params[:user][:password])
+    
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
+      if @user
+        format.json { render json: { :user => @user.as_json } }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     end
-  end
-
-  # GET /users/new
-  # GET /users/new.json
-  def new
-    @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
-    end
-  end
-
-  # GET /users/1/edit
-  def edit
-    @user = User.find(params[:id])
   end
 
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
+    # verify_authenticity ? nil : return
+
+    phone_number = format_phone(params[:user][:phone])
+    @user = User.find_or_initialize_by_phone(phone_number)
 
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+      if @user.new_record?
+        @user.password = encrypt_password(params[:user][:password])
+        @user.name = params[:user][:name].strip
+        if phone_number.length > 0 && @user.password.length > 0 && @user.name.length > 0 && @user.save
+          format.json { render json: { :user => @user.as_json } }
+        else
+          format.json { render json: { :user_error => "filled forms" } }
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        if encrypt_password(params[:user][:password]) == @user.password
+          format.json { render json: { :user => @user.as_json } }
+        else
+          format.json { render json: { :user_error => "password match" } }
+        end
       end
     end
   end
@@ -56,14 +45,14 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
-    @user = User.find(params[:id])
+    # verify_authenticity ? nil : return
+
+    @user = User.find_by_id_and_password(params[:id], params[:user][:password])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+      if @user.update_attribute(:name, params[:user][:name].strip)
+        format.json { render json: { :user => @user.as_json } }
       else
-        format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -81,36 +70,35 @@ class UsersController < ApplicationController
     end
   end
 
-  def all_contacts
+  def all_friends
     # verify_authenticity ? nil : return
 
     user = User.find(params[:id])
 
     respond_to do |format|
       if user 
-        format.json { render json: { :user => user.as_json(:methods => [:contacts]) } }
+        format.json { render json: { :user => user.as_json(:methods => [:all_friends]) } }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  def friends_in_city
+  def friends_in_my_city
     # verify_authenticity ? nil : return
 
     user = User.find(params[:id])
-    city = City.find(params[:city_id])
-
-    if user && city
-      
-    end
 
     respond_to do |format|
-      if user 
-        format.json { render json: { :user => user.as_json(:methods => [:contacts]) } }
+      if user && city
+        format.json { render json: { :user => user.as_json(:methods => [:friends_in_my_city]) } }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_contacts
+    #create contacts for this user
   end
 end

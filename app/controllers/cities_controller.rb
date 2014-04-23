@@ -5,8 +5,8 @@ class CitiesController < ApplicationController
     @cities = City.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @cities }
+      format.html
+      format.json { render json: { :cities => @cities.as_json } }
     end
   end
 
@@ -16,8 +16,8 @@ class CitiesController < ApplicationController
     @city = City.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @city }
+      format.html
+      format.json { render json: { :city => @city.as_json } }
     end
   end
 
@@ -32,14 +32,11 @@ class CitiesController < ApplicationController
     end
   end
 
-  # GET /cities/1/edit
-  def edit
-    @city = City.find(params[:id])
-  end
-
   # POST /cities
   # POST /cities.json
   def create
+    # verify_authenticity ? nil : return
+
     @city = City.new(params[:city])
 
     respond_to do |format|
@@ -56,6 +53,8 @@ class CitiesController < ApplicationController
   # PUT /cities/1
   # PUT /cities/1.json
   def update
+    # verify_authenticity ? nil : return
+
     @city = City.find(params[:id])
 
     respond_to do |format|
@@ -72,12 +71,24 @@ class CitiesController < ApplicationController
   # DELETE /cities/1
   # DELETE /cities/1.json
   def destroy
+    # verify_authenticity ? nil : return
+
     @city = City.find(params[:id])
     @city.destroy
 
     respond_to do |format|
       format.html { redirect_to cities_url }
       format.json { head :no_content }
+    end
+  end
+
+  def all_venues
+    # verify_authenticity ? nil : return
+
+    city = City.find(params[:id])
+
+    respond_to do |format|
+      format.json { render json: { :city => city.as_json(:methods => [:venues]) } }
     end
   end
 end

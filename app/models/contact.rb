@@ -5,6 +5,4 @@ class Contact < ActiveRecord::Base
 
   belongs_to :user
 
-  # scope :in_same_city_as_user, lambda { |user_id| where("user_id = ?", user_id).order('id DESC').limit(20) }
-
 end

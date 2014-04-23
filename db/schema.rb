@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140423194439) do
+ActiveRecord::Schema.define(:version => 20140423221356) do
 
   create_table "cities", :force => true do |t|
     t.string   "city_name"
@@ -29,11 +29,46 @@ ActiveRecord::Schema.define(:version => 20140423194439) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "device_tokens", :force => true do |t|
+    t.string   "android_device_token"
+    t.string   "ios_device_token"
+    t.integer  "user_id"
+    t.string   "environment",          :default => "production"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
   create_table "friendships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "invitee_name"
+    t.string   "status",       :default => "pending"
+    t.string   "phone_number"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
+
+  create_table "kptwilios", :force => true do |t|
+    t.string   "body"
+    t.string   "from_number"
+    t.string   "to_number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "push_notifications", :force => true do |t|
+    t.integer  "device_token_id"
+    t.string   "message"
+    t.string   "push_notification_type"
+    t.string   "status"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "users", :force => true do |t|
