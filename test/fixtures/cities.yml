@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  cityName: MyString
+  city_name: MyString
   longitude: 1.5
   latitude: 1.5
 
 two:
-  cityName: MyString
+  city_name: MyString
   longitude: 1.5
   latitude: 1.5
