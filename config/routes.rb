@@ -1,7 +1,4 @@
 CityRails::Application.routes.draw do
-  resources :device_tokens
-
-
   root to: "users#show"
 
   match 'users/:id/all_friends', to: 'users#all_friends', as: 'user_all_friends'
@@ -15,4 +12,7 @@ CityRails::Application.routes.draw do
   resources :users, :except => [:edit, :index]
 
   resources :invitations, :only => [:create]
+
+  resources :device_tokens, :only => [:create]
+
 end
