@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         end
       else
         if encrypt_password(params[:user][:password]) == @user.password
-          format.json { render json: { :user => @user.as_json } }
+          format.json { render json: @user.as_json }
         else
           format.json { render json: { :user_error => "password match" } }
         end
