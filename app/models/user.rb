@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
     return self.all_friends.select { |friend| friend.city_id == self.city_id }
   end
 
+  def friends_in_city(city_id)
+    return self.all_friends.select { |friend| friend.city_id == city_id }
+  end
+
   def create_contacts
     #create all the contacts for this motha fuckin user
     #see if the new contact's phone number is the phone number of a user in our system. 

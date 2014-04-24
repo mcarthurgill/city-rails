@@ -80,8 +80,21 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     respond_to do |format|
-      if user && city
+      if user
         format.json { render json: { :user => user.as_json(:methods => [:friends_in_my_city]) } }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def friends_in_city
+    user = User.find(params[:id])
+
+    respond_to do |format|
+      if user
+        friends = user.friends_in_city(params[:city][:id])
+        format.json { render json: { :user => user.as_json, :friends => friends.as_json } }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
