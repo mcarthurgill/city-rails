@@ -93,7 +93,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if user
-        friends = user.friends_in_city(params[:city][:id])
+        friends = user.friends_in_city(params[:city_id])
         format.json { render json: { :user => user.as_json, :friends => friends.as_json } }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
