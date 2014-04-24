@@ -12,7 +12,7 @@ class InvitationsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: { :invitations => ivs.as_json } }
+      format.json { render json: ivs.as_json }
     end
   end
 end
