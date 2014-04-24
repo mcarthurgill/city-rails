@@ -26,5 +26,7 @@ class User < ActiveRecord::Base
 
   def create_contacts
     #create all the contacts for this motha fuckin user
+    #see if the new contact's phone number is the phone number of a user in our system. 
+    #if so, create a friendship between the self and the found user
   end
 end
