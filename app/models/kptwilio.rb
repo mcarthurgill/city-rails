@@ -14,10 +14,10 @@ class Kptwilio < ActiveRecord::Base
     @client = Twilio::REST::Client.new account_sid, auth_token
     @account = @client.account
 
-    @message = @account.sms.messages.create({:body => @body, :to => append_plus_to_number(@to_number), :from => append_plus_to_number("12052676367")})
+    @message = @account.sms.messages.create({:body => @body, :to => append_plus_to_number(@to_number), :from => append_plus_to_number("2052676367")})
   end
 
   def append_plus_to_number(number)
-    number.first == "+" ? number : number.prepend("+")
+    return number.prepend("+1")
   end
 end
