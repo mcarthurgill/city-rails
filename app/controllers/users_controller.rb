@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       if @user
-        format.json { render json: { :user => @user.as_json } }
+        format.json { render json: @user.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -24,13 +24,13 @@ class UsersController < ApplicationController
         @user.password = encrypt_password(params[:user][:password])
         @user.name = params[:user][:name].strip
         if phone_number.length > 0 && @user.password.length > 0 && @user.name.length > 0 && @user.save
-          format.json { render json: { :user => @user.as_json } }
+          format.json { render json: @user.as_json }
         else
           format.json { render json: { :user_error => "filled forms" } }
         end
       else
         if encrypt_password(params[:user][:password]) == @user.password
-          format.json { render json: { :user => @user.as_json } }
+          format.json { render json: @user.as_json }
         else
           format.json { render json: { :user_error => "password match" } }
         end
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attribute(:name, params[:user][:name].strip)
-        format.json { render json: { :user => @user.as_json } }
+        format.json { render json: @user.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if user 
-        format.json { render json: { :user => user.as_json(:methods => [:all_friends]) } }
+        format.json { render json: user.as_json(:methods => [:all_friends]) }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
