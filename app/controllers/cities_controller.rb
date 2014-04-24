@@ -6,7 +6,7 @@ class CitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: { :cities => @cities.as_json } }
+      format.json { render json: @cities.as_json }
     end
   end
 
@@ -17,7 +17,7 @@ class CitiesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: { :city => @city.as_json } }
+      format.json { render json: @city.as_json }
     end
   end
 
@@ -80,7 +80,7 @@ class CitiesController < ApplicationController
     city = City.find(params[:id])
 
     respond_to do |format|
-      format.json { render json: { :city => city.as_json(:methods => [:venues]) } }
+      format.json { render json: city.as_json(:methods => [:venues]) }
     end
   end
 end
