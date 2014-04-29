@@ -38,4 +38,25 @@ class User < ActiveRecord::Base
     end
   end
 
+  def format_phone(number)
+    strip_whitespace!(number)
+    strip_non_numeric!(number)
+    strip_down_to_ten_digits!(number)
+    return number
+  end
+
+  def strip_whitespace!(number)
+    number.gsub!(/\s+/, "")
+  end
+
+  def strip_non_numeric!(number)
+    number.gsub!(/\D/, '')
+  end
+
+  def strip_down_to_ten_digits!(number)
+    while number.length > 10
+      number.slice!(0...1)
+    end
+  end
+
 end
