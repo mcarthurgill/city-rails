@@ -106,7 +106,8 @@ class UsersController < ApplicationController
 
     contacts = params[:contacts]
     contacts.each do |contact|
-      c = Contact.find_or_create_by_phone_number_and_user_id(contact, user.id)
+      c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), user.id)
+      puts c
     end
 
     respond_to do |format|
