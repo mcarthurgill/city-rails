@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   def create_contacts contacts_array
     contacts_array.each do |contact|
-      c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), user.id)
+      c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), self.id)
       puts c
     end
   end
