@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id_and_password(params[:id], params[:user][:password])
 
     respond_to do |format|
-      if @user.update_attribute(:name, params[:user][:name].strip)
+      if @user && @user.update_attributes(params[:user])
         format.json { render json: @user.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
