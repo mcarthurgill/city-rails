@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     end
 
     respond_to do |format|
-      if user && city
+      if user
         format.json { render json: user.as_json(:methods => []) }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
