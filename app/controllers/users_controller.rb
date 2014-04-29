@@ -69,7 +69,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if user 
-        format.json { render json: user.as_json(:methods => [:all_friends]) }
+        format.json { render json: user.all_friends.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -80,8 +80,20 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     respond_to do |format|
-      if user && city
-        format.json { render json: user.as_json(:methods => [:friends_in_my_city]) }
+      if user
+        format.json { render json: user.friends_in_my_city.as_json }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def friends_in_city
+    user = User.find(params[:id])
+
+    respond_to do |format|
+      if user
+        format.json { render json: user.friends_in_city(params[:city_id]).as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
