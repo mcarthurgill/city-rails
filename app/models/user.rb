@@ -28,7 +28,9 @@ class User < ActiveRecord::Base
   end
 
   def friends_in_city city
-    return self.connections.select { |friend| friend.city_id == city.id }
+    array = self.connections.select { |friend| friend.city_id == city.id }
+    array.delete(self)
+    return array.uniq
   end
 
   def create_contacts contacts_array
