@@ -104,11 +104,7 @@ class UsersController < ApplicationController
     #create contacts for this user
     user = User.find_by_id(params[:id])
 
-    contacts = params[:contacts]
-    contacts.each do |contact|
-      c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), user.id)
-      puts c
-    end
+    user.delay.create_contacts(params[:contacts])
 
     respond_to do |format|
       if user

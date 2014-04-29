@@ -31,4 +31,11 @@ class User < ActiveRecord::Base
     return self.connections.select { |friend| friend.city_id == city.id }
   end
 
+  def create_contacts contacts_array
+    contacts_array.each do |contact|
+      c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), user.id)
+      puts c
+    end
+  end
+
 end
