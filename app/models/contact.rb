@@ -4,5 +4,6 @@ class Contact < ActiveRecord::Base
   validates_presence_of :name, :phone_number, :user_id
 
   belongs_to :user
+  belongs_to :connection, :class_name => 'User', :foreign_key => 'phone_number', :primary_key => 'phone'
 
 end

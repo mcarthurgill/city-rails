@@ -90,5 +90,23 @@ class UsersController < ApplicationController
 
   def create_contacts
     #create contacts for this user
+    user = User.find_by_id(params[:id])
+
+    contacts = params[:contacts]
+    contacts.each do |contact|
+      c = Contact.find_or_initialize_by_phone_number_and_user_id(contact[:phone_number], user.id)
+      if c
+        c.save!
+      end
+    end
+
+    respond_to do |format|
+      if user && city
+        format.json { render json: user.as_json(:methods => []) }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 end

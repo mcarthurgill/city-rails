@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :phone
 
   belongs_to :city
-  has_many :contacts
   has_many :invitations
 
   has_many :friendships
@@ -13,20 +12,23 @@ class User < ActiveRecord::Base
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
-  def all_friends
-    all_friends = []
-    all_friends << self.friends
-    all_friends << self.inverse_friends
-    return all_friends.flatten
-  end
+  has_many :contacts
+  has_many :connections, :through => :contacts, :class_name => 'User', :foreign_key => 'phone_number'
+
+  # def all_friends
+  #   all_friends = []
+  #   all_friends << self.friends
+  #   all_friends << self.inverse_friends
+  #   return all_friends.flatten
+  # end
 
   def friends_in_my_city
-    return self.all_friends.select { |friend| friend.city_id == self.city_id }
+    # return self.all_friends.select { |friend| friend.city_id == self.city_id }
+    return self.friends_in_city(self.city)
   end
 
-  def create_contacts
-    #create all the contacts for this motha fuckin user
-    #see if the new contact's phone number is the phone number of a user in our system. 
-    #if so, create a friendship between the self and the found user
+  def friends_in_city city
+    return self.connections.select { |friend| friend.city_id == city.id }
   end
+
 end
