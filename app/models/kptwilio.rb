@@ -3,7 +3,7 @@ class Kptwilio < ActiveRecord::Base
 
   def initialize(to_number, from_number, body)
      @to_number = to_number
-     @from_number = determine_from_number(to_number)
+     @from_number = from_number
      @body = body
   end
 
