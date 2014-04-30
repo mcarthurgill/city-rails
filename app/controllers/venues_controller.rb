@@ -41,7 +41,7 @@ class VenuesController < ApplicationController
   # POST /venues.json
   def create
     @venue = Venue.new(params[:venue])
-    @venue.json_info = params[:venue][:json_info].to_s
+    @venue.json_info = JSON.parse(params[:venue][:json_info]).to_s
 
     respond_to do |format|
       if @venue.save
