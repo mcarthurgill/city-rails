@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :contacts
   has_many :connections, :through => :contacts, :class_name => 'User', :foreign_key => 'phone_number'
 
+  has_many :venues
+
   # def all_friends
   #   all_friends = []
   #   all_friends << self.friends
