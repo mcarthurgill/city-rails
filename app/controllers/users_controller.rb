@@ -140,6 +140,10 @@ class UsersController < ApplicationController
     invite_msg = Kptwilio.new(user.phone, "+12052676367", message)
     invite_msg.send
 
+    respond_to do |format|
+      format.json { render json: user }
+    end
+
   end
 
 end
