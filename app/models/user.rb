@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def favorites limit
-    return self.venues.order('id DESC').limit(limit)
+    return self.venues.order('updated_at DESC').limit(limit)
   end
 
   def create_contacts contacts_array

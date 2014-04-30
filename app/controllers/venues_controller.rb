@@ -40,7 +40,12 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
-    @venue = Venue.new(params[:venue])
+    @venue = Venue.find_by_venue_name_and_user_id(params[:venue][:venue_name], params[:venue][:user_id])
+    if !@venue
+      @venue = Venue.new(params[:venue])
+    else
+      @venue.updated_at = Time.now
+    end
 
     respond_to do |format|
       if @venue.save

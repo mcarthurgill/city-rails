@@ -130,7 +130,7 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    user = User.find_by_phone(params[:phone])
+    user = User.find_by_phone(format_phone(params[:phone]))
     new_password_number = 1000 + rand(10000)
     new_password = "#{new_password_number}"
 
