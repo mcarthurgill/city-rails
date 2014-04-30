@@ -26,13 +26,13 @@ class UsersController < ApplicationController
         if phone_number.length > 0 && @user.password.length > 0 && @user.name.length > 0 && @user.save
           format.json { render json: @user.as_json }
         else
-          format.json { render json: { :user_error => "filled forms" } }
+          format.json { render json: { :user_error => "Not all the fields were filled out!" } }
         end
       else
         if encrypt_password(params[:user][:password]) == @user.password
           format.json { render json: @user.as_json }
         else
-          format.json { render json: { :user_error => "password match" } }
+          format.json { render json: { :user_error => "The password did not match the one on file." } }
         end
       end
     end
