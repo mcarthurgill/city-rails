@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       if user
-        format.json { render json: user.favorites(4) }
+        format.json { render json: user.favorites(4).as_json({}) }
       else
         format.json { render json: user.errors, status: :unprocessable_entity }
       end

@@ -3,4 +3,13 @@ class Venue < ActiveRecord::Base
 
   belongs_to :city
   belongs_to :user
+
+  def as_json(options)
+    super(:methods => [:json])
+  end
+
+  def json
+    return self.json_info.to_json.to_s
+  end
+
 end
