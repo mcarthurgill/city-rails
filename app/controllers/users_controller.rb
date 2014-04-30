@@ -134,6 +134,11 @@ class UsersController < ApplicationController
     new_password_number = 1000 + rand(10000)
     new_password = "#{new_password_number}"
 
+    user.update_attribute(:password, encrypt_password(new_password))
+
+    message = "Your new City passcode: #{new_password}"
+    invite_msg = Kptwilio.new(self.phone_number, "+12052676367", message)
+    invite_msg.send
 
   end
 
