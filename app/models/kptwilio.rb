@@ -18,6 +18,7 @@ class Kptwilio < ActiveRecord::Base
   end
 
   def append_plus_to_number(number)
+    number = (number.first == "1" ? number : number.prepend("1"))
     number.first == "+" ? number : number.prepend("+")
   end
 end
