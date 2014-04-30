@@ -116,12 +116,25 @@ class UsersController < ApplicationController
 
   end
 
+  def venues
+    user = User.find_by_id(params[:id])
+    
+    respond_to do |format|
+      if user
+        format.json { render json: user.favorites(4) }
+      else
+        format.json { render json: user.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
   def reset_password
     user = User.find_by_phone(params[:phone])
     new_password_number = 1000 + rand(10000)
     new_password = "#{new_password_number}"
 
-    
+
   end
 
 end

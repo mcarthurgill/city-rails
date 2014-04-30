@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     return array.uniq
   end
 
+  def favorites limit
+    return self.venues.order('id DESC').limit(limit)
+  end
+
   def create_contacts contacts_array
     contacts_array.each do |contact|
       c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), self.id)
