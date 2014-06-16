@@ -40,7 +40,7 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
-    @venue = Venue.find_by_venue_name_and_user_id(params[:venue][:venue_name], params[:venue][:user_id])
+    @venue = Venue.find_by_api_id_and_user_id(params[:venue][:api_id], params[:venue][:user_id])
     if !@venue
       @venue = Venue.new(params[:venue])
     else
