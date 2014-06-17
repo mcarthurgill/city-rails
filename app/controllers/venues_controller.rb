@@ -15,7 +15,7 @@ class VenuesController < ApplicationController
   def show
     @venue = Venue.find_by_api_id_and_user_id(params[:id], params[:user_id])
     if !@venue
-      @venue = Venue.find_by_api_id(params[:api_id])
+      @venue = Venue.find_by_api_id(params[:id])
       if @venue
         @venue.user_id_override = params[:user_id]
       end
