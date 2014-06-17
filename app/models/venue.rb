@@ -15,7 +15,13 @@ class Venue < ActiveRecord::Base
   end
 
   def friends
-    return []
+    frs = []
+    self.user.friends.includes(:venues).each do |f|
+      if f.venues.find_by_api_id(self.api_id)
+        frs << f
+      end
+    end
+    return frs
   end
 
 end
