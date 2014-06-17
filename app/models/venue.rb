@@ -1,5 +1,5 @@
 class Venue < ActiveRecord::Base
-  attr_accessible :city_id, :venue_name, :venue_type, :json_info, :user_id, :api_id
+  attr_accessible :city_id, :venue_name, :venue_type, :json_info, :user_id, :api_id, :user_id_override
 
   serialize :json_info
 
@@ -22,6 +22,10 @@ class Venue < ActiveRecord::Base
       end
     end
     return frs
+  end
+
+  def friends_user_id
+    return self.user_id_override ? self.user_id_override : self.user_id
   end
 
 end

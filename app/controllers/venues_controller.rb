@@ -17,7 +17,7 @@ class VenuesController < ApplicationController
     if !@venue
       @venue = Venue.find_by_api_id(params[:api_id])
       if @venue
-        @venue.user_id = params[:user_id]
+        @venue.user_id_override = params[:user_id]
       end
     end
 
