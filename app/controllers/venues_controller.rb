@@ -16,6 +16,9 @@ class VenuesController < ApplicationController
     @venue = Venue.find_by_api_id_and_user_id(params[:id], params[:user_id])
     if !@venue
       @venue = Venue.find_by_api_id(params[:api_id])
+      if @venue
+        @venue.user_id = params[:user_id]
+      end
     end
 
     respond_to do |format|
