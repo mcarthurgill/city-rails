@@ -23,7 +23,7 @@ class VenuesController < ApplicationController
         format.json { render json: @venue.as_json(:methods => [:friends]) }
       else
         format.json { render json: @venue }
-      end
+      end 
     end
   end
 
