@@ -13,11 +13,17 @@ class VenuesController < ApplicationController
   # GET /venues/1
   # GET /venues/1.json
   def show
-    @venue = Venue.find(params[:id])
+    @venue = Venue.find_by_api_id_and_user_id(params[:api_id], params[:user_id])
+    if !@venue
+      @venue = Venue.find_by_api_id(params[:api_id])
+    end
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @venue }
+      if @venue
+        format.json { render json: @venue.as_json(:methods => [:friends]) }
+      else
+        format { render json: @venue }
+      end
     end
   end
 

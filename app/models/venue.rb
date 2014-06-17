@@ -14,4 +14,8 @@ class Venue < ActiveRecord::Base
     return self.json_info.to_json.to_s
   end
 
+  def friends
+    return []
+  end
+
 end
