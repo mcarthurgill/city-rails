@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :city_id, :name, :password, :phone
+  attr_accessible :city_id, :name, :password, :phone, :incognito
 
   validates_presence_of :name, :password, :phone
   validates_uniqueness_of :phone
@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   has_many :venues
 
+  scope :public_avail, ->{ where('incognito = ?', 'public') }
+
   # def all_friends
   #   all_friends = []
   #   all_friends << self.friends
@@ -30,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def friends_in_city city
-    array = self.connections.select { |friend| friend.city_id == city.id }
+    array = self.connections.public_avail.select { |friend| friend.city_id == city.id }
     array.delete(self)
     return array.uniq
   end
