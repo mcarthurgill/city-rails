@@ -7,7 +7,7 @@ class Venue < ActiveRecord::Base
   belongs_to :user
 
   def as_json(options)
-    super(:methods => [:json])
+    super(:methods => [:json, :friends])
   end
 
   def json

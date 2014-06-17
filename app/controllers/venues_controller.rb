@@ -19,11 +19,7 @@ class VenuesController < ApplicationController
     end
 
     respond_to do |format|
-      if @venue
-        format.json { render json: @venue.as_json(:methods => [:friends]) }
-      else
-        format.json { render json: @venue }
-      end 
+      format.json { render json: @venue }
     end
   end
 
