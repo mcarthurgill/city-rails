@@ -80,7 +80,7 @@ class CitiesController < ApplicationController
     city = City.find(params[:id])
 
     respond_to do |format|
-      format.json { render json: city.venues.as_json) }
+      format.json { render json: city.venues.as_json }
     end
   end
 end

@@ -26,13 +26,13 @@ class UsersController < ApplicationController
         if phone_number.length > 0 && @user.password.length > 0 && @user.name.length > 0 && @user.save
           format.json { render json: @user.as_json }
         else
-          format.json { render json: { :user_error => "filled forms" } }
+          format.json { render json: { :user_error => "Not all the fields were filled out!" } }
         end
       else
         if encrypt_password(params[:user][:password]) == @user.password
           format.json { render json: @user.as_json }
         else
-          format.json { render json: { :user_error => "password match" } }
+          format.json { render json: { :user_error => "The password did not match the one on file." } }
         end
       end
     end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id_and_password(params[:id], params[:user][:password])
 
     respond_to do |format|
-      if @user.update_attribute(:name, params[:user][:name].strip)
+      if @user && @user.update_attributes(params[:user])
         format.json { render json: @user.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -93,7 +93,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if user
-        format.json { render json: user.friends_in_city(params[:city_id]).as_json }
+        format.json { render json: user.friends_in_city(City.find_by_id(params[:city_id])).as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -102,5 +102,48 @@ class UsersController < ApplicationController
 
   def create_contacts
     #create contacts for this user
+    user = User.find_by_id(params[:id])
+
+    user.delay.create_contacts(params[:contacts])
+
+    respond_to do |format|
+      if user
+        format.json { render json: user.as_json(:methods => []) }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
+
+  def venues
+    user = User.find_by_id(params[:id])
+    
+    respond_to do |format|
+      if user
+        format.json { render json: user.favorites(0).as_json({}) }
+      else
+        format.json { render json: user.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
+  def reset_password
+    user = User.find_by_phone(format_phone(params[:phone]))
+    new_password_number = 1000 + rand(10000)
+    new_password = "#{new_password_number}"
+
+    user.update_attribute(:password, encrypt_password(new_password))
+
+    message = "Your new City passcode: #{new_password}"
+    invite_msg = Kptwilio.new(user.phone, "+12052676367", message)
+    invite_msg.send
+
+    respond_to do |format|
+      format.json { render json: user }
+    end
+
+  end
+
 end

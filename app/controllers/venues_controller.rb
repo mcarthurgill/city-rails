@@ -13,10 +13,15 @@ class VenuesController < ApplicationController
   # GET /venues/1
   # GET /venues/1.json
   def show
-    @venue = Venue.find(params[:id])
+    @venue = Venue.find_by_api_id_and_user_id(params[:id], params[:user_id])
+    if !@venue
+      @venue = Venue.find_by_api_id(params[:id])
+      if @venue
+        @venue.user_id_override = params[:user_id]
+      end
+    end
 
     respond_to do |format|
-      format.html # show.html.erb
       format.json { render json: @venue }
     end
   end
@@ -40,7 +45,12 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
-    @venue = Venue.new(params[:venue])
+    @venue = Venue.find_by_api_id_and_user_id(params[:venue][:api_id], params[:venue][:user_id])
+    if !@venue
+      @venue = Venue.new(params[:venue])
+    else
+      @venue.updated_at = Time.now
+    end
 
     respond_to do |format|
       if @venue.save
