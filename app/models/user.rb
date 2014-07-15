@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   def friends_in_my_city
     # return self.all_friends.select { |friend| friend.city_id == self.city_id }
-    return self.friends_in_city(self.city)
+    return self.friends_in_city(self.city).public_avail
   end
 
   def friends_in_city city
@@ -46,20 +46,11 @@ class User < ActiveRecord::Base
   end
 
   def friends_by_city
-    p "*"*50    
     cities_as_hash = City.cities_as_hash
-    p "cities as hash"
-    p cities_as_hash
-    p "*"*50
-    friends = self.connections.delete_if {|user| user == self }
-    p "friends"
-    p friends
+    friends = self.connections.public_avail.delete_if {|user| user == self }
     friends.each do |f|
       cities_as_hash[f.city.city_name] << f
     end
-    p "*"*50
-    p "final cities as hash"
-    p cities_as_hash
     cities_as_hash
   end
 
