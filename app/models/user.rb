@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
     p "cities as hash"
     p cities_as_hash
     p "*"*50
-    friends = self.all_friends
+    friends = self.connections.delete_if {|user| user == self }
     p "friends"
     p friends
     friends.each do |f|
