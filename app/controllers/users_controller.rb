@@ -76,6 +76,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def friends_by_city
+    user = User.find(params[:id])
+    friends_grouped_by_city = user.friends_by_city
+
+    respond_to do |format|
+      if user
+        format.json { render json: friends_grouped_by_city.as_json }
+      else
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def friends_in_my_city
     user = User.find(params[:id])
 

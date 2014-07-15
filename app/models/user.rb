@@ -19,12 +19,12 @@ class User < ActiveRecord::Base
 
   scope :public_avail, ->{ where('incognito = ?', 'public') }
 
-  # def all_friends
-  #   all_friends = []
-  #   all_friends << self.friends
-  #   all_friends << self.inverse_friends
-  #   return all_friends.flatten
-  # end
+  def all_friends
+    all_friends = []
+    all_friends << self.friends.includes(:city)
+    all_friends << self.inverse_friends.includes(:city)
+    return all_friends.flatten
+  end
 
   def friends_in_my_city
     # return self.all_friends.select { |friend| friend.city_id == self.city_id }
@@ -43,6 +43,15 @@ class User < ActiveRecord::Base
     else
       return self.venues.order('updated_at DESC')
     end
+  end
+
+  def friends_by_city
+    cities_as_hash = City.cities_as_hash
+    friends = self.all_friends
+    friends.each do |f|
+      cities_as_hash[f.city.city_name] << f
+    end
+    cities_as_hash
   end
 
   def create_contacts contacts_array

@@ -5,4 +5,13 @@ class City < ActiveRecord::Base
 
   has_many :users
   has_many :venues
+
+  def self.cities_as_hash
+    #returns {"Montgomery" => [], "Nashville" => [],...}
+    cities_hash = {}
+    City.all.each do |c|
+      cities_hash[c.city_name] = []
+    end
+    return cities_hash
+  end
 end
