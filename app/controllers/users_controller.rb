@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
   def friends_by_city
     user = User.find(params[:id])
-    friends_grouped_by_city = user.friends_by_city
+    friends_grouped_by_city = user.friends_by_city if user
     p "*"*50
     p user
     p friends_grouped_by_city

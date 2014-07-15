@@ -19,12 +19,12 @@ class User < ActiveRecord::Base
 
   scope :public_avail, ->{ where('incognito = ?', 'public') }
 
-  def all_friends
-    all_friends = []
-    all_friends << self.friends.includes(:city)
-    all_friends << self.inverse_friends.includes(:city)
-    return all_friends.flatten
-  end
+  # def all_friends
+  #   all_friends = []
+  #   all_friends << self.friends.includes(:city)
+  #   all_friends << self.inverse_friends.includes(:city)
+  #   return all_friends.flatten
+  # end
 
   def friends_in_my_city
     # return self.all_friends.select { |friend| friend.city_id == self.city_id }
@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
       cities_as_hash[f.city.city_name] << f
     end
     p "*"*50
-    P "final cities as hash"
+    p "final cities as hash"
     p cities_as_hash
     cities_as_hash
   end
