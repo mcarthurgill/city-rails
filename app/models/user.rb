@@ -46,11 +46,20 @@ class User < ActiveRecord::Base
   end
 
   def friends_by_city
+    p "*"*50    
     cities_as_hash = City.cities_as_hash
+    p "cities as hash"
+    p cities_as_hash
+    p "*"*50
     friends = self.all_friends
+    p "friends"
+    p friends
     friends.each do |f|
       cities_as_hash[f.city.city_name] << f
     end
+    p "*"*50
+    P "final cities as hash"
+    p cities_as_hash
     cities_as_hash
   end
 
