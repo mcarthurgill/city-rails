@@ -2,6 +2,7 @@ CityRails::Application.routes.draw do
   root to: "users#show"
 
   match 'users/:id/all_friends', to: 'users#all_friends', as: 'user_all_friends'
+  match 'users/:id/friends_by_city', to: 'users#friends_by_city', as: 'user_friends_by_city'
   match 'users/:id/venues', to: 'users#venues', as: 'venues'
   match 'users/:id/friends_in_my_city', to: 'users#friends_in_my_city', as: 'user_friends_in_my_city'
   match 'users/:id/friends_in_city/:city_id', to: "users#friends_in_city", as: 'user_friends_in_city'
