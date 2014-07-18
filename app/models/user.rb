@@ -68,6 +68,31 @@ class User < ActiveRecord::Base
     cities_as_hash
   end
 
+  def friends_recommendations city
+    all_friends = self.connections_without_self
+    friends_array = []
+    
+    venues_count_hash = {}
+    all_friends.each do |f|
+      venues = f.favorites_in_city(0, city) 
+      if venues.count > 0
+        venues.each do |v|
+          if venues_count_hash[v]
+            venues_count_hash[v] = venues_count_hash[v] + 1
+          else
+            venues_count_hash[v] = 1
+          end
+        end
+      end
+    end
+
+    venues_count_hash.each do |k, v|
+      friends_array << {k => v}
+    end
+
+    friends_array.sort_by {|obj| obj.values[0] }
+  end
+
   def create_contacts contacts_array
     contacts_array.each do |contact|
       c = Contact.find_or_create_by_phone_number_and_user_id(format_phone(contact), self.id)
