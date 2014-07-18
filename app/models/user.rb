@@ -89,13 +89,6 @@ class User < ActiveRecord::Base
     end
 
     #sort descending
-    p "*"*50
-    friends_array.each do |obj|
-      p obj
-      p obj["count"]
-      p obj.first.last["count"]
-      p "*"*50
-    end
     friends_array.sort_by {|obj| obj["count"] }.reverse
   end
 
