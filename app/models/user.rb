@@ -45,6 +45,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def favorites_in_city limit, city
+    if limit > 0
+      return self.venues.where("city_id = ?", city.id).order('updated_at DESC').limit(limit)
+    else
+      return self.venues.where("city_id = ?", city.id).order('updated_at DESC')
+    end
+  end
+
+  def connections_without_self
+    array = self.connections.public_avail
+    array.delete(self)
+    return array.uniq
+  end
+
   def friends_by_city
     cities_as_hash = City.cities_as_hash
     friends = self.connections.public_avail.delete_if {|user| user == self }

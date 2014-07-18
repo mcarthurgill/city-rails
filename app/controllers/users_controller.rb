@@ -160,10 +160,15 @@ class UsersController < ApplicationController
 
   def friend_favorites_for_city
     user = User.find(params[:id])
-    friends_in_city = user.friends_in_city(City.find(params[:city_id]))
+    city = City.find(params[:city_id])
+    friends_in_city = user.connections_without_self
+    friends_and_venues = {}
+    friends_in_city.each do |f|
+      friends_and_venues[f] = f.favorites_in_city(0, city) if f.favorites_in_city(0, city).count > 0
+    end
 
     respond_to do |format|
-      format.json { render json: { friends_in_city => {:methods => :favorites} }}
+      format.json { render json: friends_and_venues }
     end
   end
 
