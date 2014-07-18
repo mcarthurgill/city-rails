@@ -90,7 +90,8 @@ class User < ActiveRecord::Base
       friends_array << {k => v}
     end
 
-    friends_array.sort_by {|obj| obj.values[0] }
+    #sort descending
+    friends_array.sort_by {|obj| obj.values[0] }.reverse
   end
 
   def create_contacts contacts_array
