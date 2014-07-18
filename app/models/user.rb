@@ -71,27 +71,27 @@ class User < ActiveRecord::Base
   def friends_recommendations city
     all_friends = self.connections_without_self
     friends_array = []
+    favorite_venues = {}
     
-    venues_count_hash = {}
     all_friends.each do |f|
       venues = f.favorites_in_city(0, city) 
-      if venues.count > 0
-        venues.each do |v|
-          if venues_count_hash[v]
-            venues_count_hash[v] = venues_count_hash[v] + 1
-          else
-            venues_count_hash[v] = 1
-          end
+      venues.each do |v|
+        if favorite_venues[v.api_id]
+          favorite_venues[v.api_id]["count"] = favorite_venues[v.api_id]["count"] + 1
+        else
+          favorite_venues[v.api_id] = {"name" => v.venue_name, "user_id" => v.user_id, "city_id" => v.city_id, "count" = 1}
         end
       end
     end
 
-    venues_count_hash.each do |k, v|
-      friends_array << {k => v}
+    #{api_id1 => {"count" => 1, "name" => "Pharmacy", ...}, api_id2 => {"count" => 3, "name" => "McDougals", ...}}
+
+    favorite_venues.each do |api_id, value_hash|
+      friends_array << {api_id, value_hash}
     end
 
     #sort descending
-    friends_array.sort_by {|obj| obj.values[0] }.reverse
+    friends_array.sort_by {|obj| obj.values[0]["count"] }.reverse
   end
 
   def create_contacts contacts_array
