@@ -162,13 +162,19 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     city = City.find(params[:city_id])
     friends_in_city = user.connections_without_self
-    friends_and_venues = {}
+    friends_array = []
+
     friends_in_city.each do |f|
-      friends_and_venues[f] = f.favorites_in_city(0, city) if f.favorites_in_city(0, city).count > 0
+      venues = f.favorites_in_city(0, city) 
+      if venues.count > 0
+        friend_and_venues = {"user" => f}
+        friend_and_venues["venues"] = venues
+        friends_array << friend_and_venues
+      end
     end
 
     respond_to do |format|
-      format.json { render json: friends_and_venues }
+      format.json { render json: friends_array }
     end
   end
 
