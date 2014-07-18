@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
     end
 
     favorite_venues.each do |api_id, value_hash|
-      friends_array << {api_id => value_hash}
+      friends_array << value_hash
     end
 
     #sort descending
