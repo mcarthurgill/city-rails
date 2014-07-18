@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
     #{api_id1 => {"count" => 1, "name" => "Pharmacy", ...}, api_id2 => {"count" => 3, "name" => "McDougals", ...}}
 
     favorite_venues.each do |api_id, value_hash|
-      friends_array << {api_id, value_hash}
+      friends_array << {api_id => value_hash}
     end
 
     #sort descending
