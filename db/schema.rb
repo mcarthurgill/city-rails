@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140423225205) do
+ActiveRecord::Schema.define(:version => 20140617024603) do
 
   create_table "cities", :force => true do |t|
     t.string   "city_name"
@@ -92,16 +92,21 @@ ActiveRecord::Schema.define(:version => 20140423225205) do
     t.string   "name"
     t.string   "password"
     t.integer  "city_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "incognito",  :default => "public"
   end
 
   create_table "venues", :force => true do |t|
     t.string   "venue_name"
     t.string   "venue_type"
     t.integer  "city_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "user_id"
+    t.text     "json_info"
+    t.string   "api_id"
+    t.integer  "user_id_override"
   end
 
 end

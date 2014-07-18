@@ -8,6 +8,7 @@ CityRails::Application.routes.draw do
   match 'users/:id/friends_in_city/:city_id', to: "users#friends_in_city", as: 'user_friends_in_city'
   match 'users/:id/create_contacts', to: 'users#create_contacts', as: 'user_create_contacts'
   match 'reset_password', to: 'users#reset_password', as: 'reset_password'
+  match 'users/:id/friend_favorites_for_city/:city_id', to: 'users#friend_favorites_for_city', as: 'friend_favorites'
 
   resources :cities
 

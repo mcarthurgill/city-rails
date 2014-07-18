@@ -156,7 +156,15 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json { render json: user }
     end
+  end
 
+  def friend_favorites_for_city
+    user = User.find(params[:id])
+    friends_in_city = user.friends_in_city(City.find(params[:city_id]))
+
+    respond_to do |format|
+      format.json { render json: { friends_in_city => {:methods => :favorites} }}
+    end
   end
 
 end
