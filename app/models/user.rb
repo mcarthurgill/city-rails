@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
         if favorite_venues[v.api_id]
           favorite_venues[v.api_id]["count"] = favorite_venues[v.api_id]["count"] + 1
         else
-          favorite_venues[v.api_id] = {"name" => v.venue_name, "user_id" => v.user_id, "city_id" => v.city_id, "count" = 1}
+          favorite_venues[v.api_id] = {"name" => v.venue_name, "user_id" => v.user_id, "city_id" => v.city_id, "count" => 1}
         end
       end
     end
