@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
     end
 
     #sort descending
-    friends_array.sort_by {|obj| obj.values[0]["count"] }.reverse
+    friends_array.sort_by {|obj| obj.last["count"] }.reverse
   end
 
   def create_contacts contacts_array
