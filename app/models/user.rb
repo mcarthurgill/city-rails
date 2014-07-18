@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def connections_without_self
-    array = self.connections.public_avail
+    array = self.connections
     array.delete(self)
     return array.uniq
   end
