@@ -74,17 +74,15 @@ class User < ActiveRecord::Base
     favorite_venues = {}
     
     all_friends.each do |f|
-      venues = f.favorites_in_city(0, city) 
+      venues = f.favorites_in_city(4, city) 
       venues.each do |v|
         if favorite_venues[v.api_id]
           favorite_venues[v.api_id]["count"] = favorite_venues[v.api_id]["count"] + 1
         else
-          favorite_venues[v.api_id] = {"name" => v.venue_name, "user_id" => v.user_id, "city_id" => v.city_id, "count" => 1}
+          favorite_venues[v.api_id] = {"json" => v.json_info, "count" => 1}
         end
       end
     end
-
-    #{api_id1 => {"count" => 1, "name" => "Pharmacy", ...}, api_id2 => {"count" => 3, "name" => "McDougals", ...}}
 
     favorite_venues.each do |api_id, value_hash|
       friends_array << {api_id => value_hash}
