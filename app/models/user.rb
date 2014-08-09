@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
     return array.uniq
   end
 
-  def favorites limit
+  def favorites limit=4
     if limit > 0
       return self.venues.order('updated_at DESC').limit(limit)
     else
