@@ -14,7 +14,7 @@ class Invitation < ActiveRecord::Base
     user = User.where("phone = ?", phone_number).first
 
     if user.nil?
-      message = "#{self.user.name} invited you to join City App. Here's the iPhone download link: http://bit.ly/1bNKglI"
+      message = "#{self.user.name} invited you to join City App. Here's the iPhone download link: https://appsto.re/us/2MAt2.i"
       invite_msg = Kptwilio.new(self.phone_number, "+12052676367", message)
       invite_msg.send
     end 
