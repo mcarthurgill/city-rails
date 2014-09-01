@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
     favorite_venues = {}
     
     all_friends.each do |f|
-      venues = f.favorites_in_city(4, city) 
+      venues = f.favorites_in_city(0, city) 
       venues.each do |v|
         if favorite_venues[v.api_id]
           favorite_venues[v.api_id]["count"] = favorite_venues[v.api_id]["count"] + 1
