@@ -20,4 +20,6 @@ CityRails::Application.routes.draw do
 
   resources :device_tokens, :only => [:create]
 
+  match "privacy_policy", to: "users#privacy_policy", as: "privacy_policy"
+
 end

@@ -168,4 +168,6 @@ class UsersController < ApplicationController
     end
   end
 
+  def privacy_policy
+  end
 end
