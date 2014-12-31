@@ -1,5 +1,5 @@
 CityRails::Application.routes.draw do
-  root to: "users#show"
+  root to: "cities#index"
 
   match 'users/:id/all_friends', to: 'users#all_friends', as: 'user_all_friends'
   match 'users/:id/friends_by_city', to: 'users#friends_by_city', as: 'user_friends_by_city'

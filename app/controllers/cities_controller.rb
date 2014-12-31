@@ -21,6 +21,13 @@ class CitiesController < ApplicationController
     end
   end
 
+  def edit
+    @city = City.find(params[:id])
+
+    respond_to do |format|
+      format.html
+    end
+  end
   # GET /cities/new
   # GET /cities/new.json
   def new
