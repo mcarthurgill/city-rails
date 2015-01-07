@@ -5,6 +5,4 @@ class Contact < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :connection, :class_name => 'User', :foreign_key => 'phone_number', :primary_key => 'phone'
-
-  scope :unblocked, ->{ where('blocked = ?', false) }
 end
