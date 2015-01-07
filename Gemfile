@@ -30,7 +30,7 @@ gem 'jquery-rails'
 gem 'rpush'
 gem 'delayed_job_active_record'
 gem 'twilio-ruby'
-
+gem 'apns'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
