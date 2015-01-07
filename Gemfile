@@ -27,7 +27,7 @@ end
 gem 'jquery-rails'
 
 #added gems
-gem 'rapns'
+gem 'rpush'
 gem 'delayed_job_active_record'
 gem 'twilio-ruby'
 
