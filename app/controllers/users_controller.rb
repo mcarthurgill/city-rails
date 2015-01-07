@@ -177,10 +177,10 @@ class UsersController < ApplicationController
 
     contacts_to_block = block_user.contacts.where("phone_number = ?", user.phone)
     contacts_to_block.each do |c|
-      c.blocked = true
+      c.blocked = !c.blocked
       c.save!
     end
-    
+
     respond_to do |format|
       format.json { render json: contacts_to_block }
     end
