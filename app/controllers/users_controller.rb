@@ -170,4 +170,19 @@ class UsersController < ApplicationController
 
   def privacy_policy
   end
+
+  def block_user
+    user = User.find(params[:id])
+    block_user = User.find(params[:block_id])
+
+    contacts_to_block = block_user.contacts.where("phone_number = ?", user.phone)
+    contacts_to_block.each do |c|
+      c.blocked = true
+      c.save!
+    end
+    
+    respond_to do |format|
+      format.json { render json: contacts_to_block }
+    end
+  end
 end

@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def friends_in_city city
-    array = self.connections.public_avail.select { |friend| friend.city_id == city.id }
+    array = self.connections.unblocked.public_avail.select { |friend| friend.city_id == city.id }
     array.delete(self)
     return array.uniq
   end
@@ -54,14 +54,14 @@ class User < ActiveRecord::Base
   end
 
   def connections_without_self
-    array = self.connections
+    array = self.connections.unblocked
     array.delete(self)
     return array.uniq
   end
 
   def friends_by_city
     cities_as_hash = City.cities_as_hash
-    friends = self.connections.public_avail.delete_if {|user| user == self }
+    friends = self.connections.unblocked.public_avail.delete_if {|user| user == self }
     friends.each do |f|
       cities_as_hash[f.city.city_name] << f
     end
