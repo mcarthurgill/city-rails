@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
   def connections_without_self
     array = self.connections.where("blocked = ?", false)
-    array.delete(self)
+    array = array - [self]
     return array.uniq
   end
 
