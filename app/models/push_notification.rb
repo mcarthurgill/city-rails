@@ -24,6 +24,7 @@ class PushNotification < ActiveRecord::Base
     APNS.host = "gateway.sandbox.push.apple.com"
     APNS.pem = File.join(Rails.root, "ZroundDevelopment.pem")
     APNS.port = 2195 
+    APNS.passphrase = "snickers"
     APNS.send_notification(self.device_token.ios_device_token, :alert => self.message, :badge => 1)
 
   end
