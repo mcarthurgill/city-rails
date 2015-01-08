@@ -29,7 +29,7 @@ class PushNotification < ActiveRecord::Base
   end
 
   def self.create_with_device_token_and_message(dt, m)
-    PushNotification.create(:device_token_id => d.id, :message => m)
+    PushNotification.create(:device_token_id => dt.id, :message => m)
   end
 
   # def send_android_notification
