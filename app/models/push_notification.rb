@@ -40,7 +40,7 @@ class PushNotification < ActiveRecord::Base
     APNS.host = "gateway.sandbox.push.apple.com"
     APNS.pem = File.join(Rails.root, "ZroundDevelopment.pem")
     APNS.port = 2195 
-    APNS.send_notification("393ef7f4fb1c08b4fe6440baae334e88e296d7bd80f044b25221ee4fc22466e2", :alert => 'New Notification!', :badge => 1, :sound => 'default')
+    APNS.send_notification("393ef7f4fb1c08b4fe6440baae334e88e296d7bd80f044b25221ee4fc22466e2", :alert => 'New Notification!', :badge => 1)
 
   end
 
