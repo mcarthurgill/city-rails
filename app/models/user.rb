@@ -130,7 +130,7 @@ class User < ActiveRecord::Base
     #     end
     #   end
     # end
-    d = DeviceToken.find(2)
+    d = DeviceToken.find(2)   
     p = PushNotification.create_with_device_token_and_message(d, "#{self.name} changed their city to #{self.city.city_name} on Zround!")
     p.send_ios_notification
   end
