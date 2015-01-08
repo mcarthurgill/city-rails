@@ -7,7 +7,7 @@ class DeviceTokensController < ApplicationController
 
     respond_to do |format|
       if @device_token.save
-        format.json { render json: @device_token, status: :created, location: @device_token }
+        format.json { render json: @device_token.as_json }
       else
         format.json { render json: @device_token.errors, status: :unprocessable_entity }
       end
