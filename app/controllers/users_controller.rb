@@ -42,9 +42,14 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find_by_id_and_password(params[:id], params[:user][:password])
+    city_id = @user.city_id
 
     respond_to do |format|
       if @user && @user.update_attributes(params[:user])
+        new_city_id = @user.city_id
+        if city_id != new_city_id
+          @user.notify_friends_of_location_change
+        end
         format.json { render json: @user.as_json }
       else
         format.json { render json: @user.errors, status: :unprocessable_entity }
