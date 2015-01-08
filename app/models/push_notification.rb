@@ -20,11 +20,21 @@ class PushNotification < ActiveRecord::Base
 
   def send_ios_notification
 
-    self.message = truncate(self.message, length: 160)
+    # self.message = truncate(self.message, length: 160)
+    # APNS.host = "gateway.push.apple.com"
+    # APNS.pem = File.join(Rails.root, "Z.pem")
+    # APNS.port = 2195 
+    # APNS.send_notification(self.device_token.ios_device_token, :alert => self.message, :badge => 1)
+
+    # APNS.host = "gateway.sandbox.push.apple.com"
+    # APNS.pem = File.join(Rails.root, "ZroundDevelopment.pem")
+    # APNS.port = 2195
+    # APNS.send_notification("0505aa4768f84595be2910f8908946813496307b2f1ff6ba59695e92eb931242", alert: "Supppp")
+
     APNS.host = "gateway.push.apple.com"
-    APNS.pem = File.join(Rails.root, "Z.pem")
-    APNS.port = 2195 
-    APNS.send_notification(self.device_token.ios_device_token, :alert => self.message, :badge => 1)
+    APNS.pem = File.join(Rails.root, "ZProdCombined.pem")
+    APNS.port = 2195
+    APNS.send_notification("0505aa4768f84595be2910f8908946813496307b2f1ff6ba59695e92eb931242", alert: "Supppper Time Bitches")
 
   end
 
