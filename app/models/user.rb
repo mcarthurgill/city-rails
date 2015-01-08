@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   belongs_to :city
   has_many :invitations
-
+  has_many :device_tokens
   has_many :friendships
   has_many :friends, :through => :friendships  
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"

@@ -20,23 +20,28 @@ class PushNotification < ActiveRecord::Base
 
   def send_ios_notification
 
-    self.message = truncate(self.message, length: 160)
+    # self.message = truncate(self.message, length: 160)
 
-    n = Rapns::Apns::Notification.new
-    if self.device_token.environment == "production"
-      n.app = Rapns::Apns::App.find_by_name(ENV['IOS_PRODUCTION_RAPNS_ENVIRONMENT'])
-    else
-      n.app = Rapns::Apns::App.find_by_name(ENV['IOS_RAPNS_ENVIRONMENT'])
-    end
-    n.device_token = self.device_token.ios_device_token
-    n.alert = self.message
-    #if self.device_token.user
-    #  n.badge = self.device_token.user.all_unseen_posts(false).count
-    #else
-      n.badge = 2
-    #end
-    n.attributes_for_device = { :post_id => self.post_id, :group_id => (self.post ? self.post.group_id : nil), :type => self.push_notification_type }
-    n.save!
+    # n = Rapns::Apns::Notification.new
+    # if self.device_token.environment == "production"
+    #   n.app = Rapns::Apns::App.find_by_name(ENV['IOS_PRODUCTION_RAPNS_ENVIRONMENT'])
+    # else
+    #   n.app = Rapns::Apns::App.find_by_name(ENV['IOS_RAPNS_ENVIRONMENT'])
+    # end
+    # n.device_token = self.device_token.ios_device_token
+    # n.alert = self.message
+    # #if self.device_token.user
+    # #  n.badge = self.device_token.user.all_unseen_posts(false).count
+    # #else
+    #   n.badge = 2
+    # #end
+    # n.attributes_for_device = { :post_id => self.post_id, :group_id => (self.post ? self.post.group_id : nil), :type => self.push_notification_type }
+    # n.save!
+    APNS.host = "gateway.sandbox.push.apple.com"
+    APNS.pem = File.join(Rails.root, "ZroundDevelopment.pem")
+    APNS.port = 2195 
+    APNS.send_notification("393ef7f4fb1c08b4fe6440baae334e88e296d7bd80f044b25221ee4fc22466e2", :alert => 'New Notification!', :badge => 1, :sound => 'default')
+
   end
 
 
