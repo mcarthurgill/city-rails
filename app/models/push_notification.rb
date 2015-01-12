@@ -31,8 +31,13 @@ class PushNotification < ActiveRecord::Base
     # APNS.port = 2195
     # APNS.send_notification("0505aa4768f84595be2910f8908946813496307b2f1ff6ba59695e92eb931242", alert: "Supppp")
 
-    APNS.host = "gateway.push.apple.com"
-    APNS.pem = File.join(Rails.root, "ZProdCombined.pem")
+    if self.device_token.environment == 'development'
+      APNS.host = "gateway.sandbox.push.apple.com"
+      APNS.pem = File.join(Rails.root, "ZroundDevelopment.pem")
+    else
+      APNS.host = "gateway.push.apple.com"
+      APNS.pem = File.join(Rails.root, "ZProdCombined.pem")
+    end
     APNS.port = 2195
     APNS.send_notification("0505aa4768f84595be2910f8908946813496307b2f1ff6ba59695e92eb931242", alert: "Supppper Time Bitches")
 
