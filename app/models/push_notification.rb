@@ -40,7 +40,7 @@ class PushNotification < ActiveRecord::Base
     end
     APNS.pass = 'snickers'
     APNS.port = 2195
-    APNS.send_notification("0505aa4768f84595be2910f8908946813496307b2f1ff6ba59695e92eb931242", alert: "Supppper Time Bitches")
+    APNS.send_notification(self.device_token.ios_device_token, alert: self.message)
 
   end
 
